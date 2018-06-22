@@ -348,7 +348,7 @@ class FacebookDriver extends HttpDriver implements VerifiesService
                 $recipient = ['id' => $payload['sender']['id']];
             }
         } else {
-            $recipient = ['id' => $matchingMessage->getSender()];
+            $recipient = ctype_digit($matchingMessage->getSender()) ? ['id' => $matchingMessage->getSender()] : ['user_ref' => $matchingMessage->getSender()];
         }
         $parameters = array_merge_recursive([
             'messaging_type' => self::TYPE_RESPONSE,
